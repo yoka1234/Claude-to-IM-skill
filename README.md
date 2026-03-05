@@ -165,10 +165,13 @@ The `setup` wizard provides inline guidance for every step. Here's a summary:
 
 1. Go to [Feishu Open Platform](https://open.feishu.cn/app) (or [Lark](https://open.larksuite.com/app))
 2. Create Custom App → get App ID and App Secret
-3. Add permissions: `im:message`, `im:message.group_at_msg`, `im:resource`
-4. Enable Bot feature → publish and approve
+3. **Batch-add permissions**: go to "Permissions & Scopes" → use batch configuration to add all required scopes (the `setup` wizard provides the exact JSON)
+4. Enable Bot feature under "Add Features"
+5. **Events & Callbacks**: select **"Long Connection"** as event dispatch method → add `im.message.receive_v1` event
+6. **Publish**: go to "Version Management & Release" → create version → submit for review → approve in Admin Console
+7. **Important**: The bot will NOT work until the version is approved and published
 
-前往[飞书开放平台](https://open.feishu.cn/app) → 创建自建应用 → 获取 App ID 和 App Secret → 添加权限 `im:message` 等 → 启用机器人 → 发布审核。
+前往[飞书开放平台](https://open.feishu.cn/app) → 创建自建应用 → 获取 App ID 和 App Secret → 在"权限管理"中批量添加权限（setup 向导提供完整 JSON）→ 启用机器人 → 在"事件与回调"中选择**长连接**方式并添加 `im.message.receive_v1` 事件 → 创建版本并发布审核 → 在管理后台审核通过后方可使用。
 
 ## Architecture / 架构
 

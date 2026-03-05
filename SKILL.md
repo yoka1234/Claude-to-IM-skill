@@ -127,18 +127,59 @@ Ask for **App ID** and **App Secret** with this guidance:
 >    - **App ID** (like `cli_xxxxxxxxxx`)
 >    - **App Secret** (click to reveal, like `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`)
 >
-> **Required permissions (under "Permissions & Scopes"):**
-> - `im:message` — Send and receive messages
-> - `im:message.group_at_msg` — Receive @ mentions in groups
-> - `im:resource` — Access message resources (images/files)
+> **Step A — Batch-add required permissions:**
+> 1. On the app page, go to **"Permissions & Scopes"**
+> 2. Instead of adding permissions one by one, use **batch configuration**: click the **"Batch switch to configure by dependency"** link (or find the JSON editor)
+> 3. Paste the following JSON to add all required permissions at once:
+> ```json
+> {
+>   "scopes": {
+>     "tenant": [
+>       "aily:file:read",
+>       "aily:file:write",
+>       "application:application.app_message_stats.overview:readonly",
+>       "application:application:self_manage",
+>       "application:bot.menu:write",
+>       "contact:user.employee_id:readonly",
+>       "corehr:file:download",
+>       "event:ip_list",
+>       "im:chat.access_event.bot_p2p_chat:read",
+>       "im:chat.members:bot_access",
+>       "im:message",
+>       "im:message.group_at_msg:readonly",
+>       "im:message.p2p_msg:readonly",
+>       "im:message:readonly",
+>       "im:message:send_as_bot",
+>       "im:resource"
+>     ],
+>     "user": [
+>       "aily:file:read",
+>       "aily:file:write",
+>       "im:chat.access_event.bot_p2p_chat:read"
+>     ]
+>   }
+> }
+> ```
+> 4. Click **"Save"** to apply all permissions
 >
-> **Enable the bot:**
+> **Step B — Enable the bot:**
 > 1. Go to **"Add Features"** → enable **"Bot"**
 > 2. Set the bot name and description
 >
-> **Publish the app:**
-> 1. Go to **"Version Management & Release"** → create a version → submit for review
-> 2. For personal/test use, the admin can approve it directly in the Feishu Admin Console
+> **Step C — Configure Events & Callbacks (long connection):**
+> 1. Go to **"Events & Callbacks"** in the left sidebar
+> 2. Under **"Event Dispatch Method"**, select **"Long Connection"** (长连接 / WebSocket mode)
+> 3. Click **"Add Event"** and add these events:
+>    - `im.message.receive_v1` — Receive messages
+>    - `p2p_chat_create` — Bot added to chat (optional but recommended)
+> 4. Click **"Save"**
+>
+> **Step D — Publish the app:**
+> 1. Go to **"Version Management & Release"** → click **"Create Version"**
+> 2. Fill in version number and update description → click **"Save"**
+> 3. Click **"Submit for Review"**
+> 4. For personal/test use, the admin can approve it directly in the **Feishu Admin Console** → **App Review**
+> 5. **Important:** The bot will NOT respond to messages until the version is approved and published
 
 Then ask for **Domain** (optional):
 
